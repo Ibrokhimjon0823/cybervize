@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import DrugDiseaseSearchView
+from .views import DiseaseSearchAPIView, DrugSearchAPIView, DrugDiseaseSearchAPIView
 
 urlpatterns = [
-    path('search/', DrugDiseaseSearchView.as_view(), name='drug_disease_search'),
+    path('api/diseases/', DiseaseSearchAPIView.as_view(), name='disease-search'),
+    path('api/drugs/', DrugSearchAPIView.as_view(), name='drug-search'),
+    path('api/drug-disease-search/', DrugDiseaseSearchAPIView.as_view(), name='drug-disease-search'),
 ]
