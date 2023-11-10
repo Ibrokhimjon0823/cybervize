@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Drug, Disease
 from .serializers import DrugDiseaseSearchSerializer
 from django_filters import FilterSet, CharFilter
+from django.db.models import Q
 
 
 class DrugDiseaseFilter(FilterSet):
@@ -14,8 +15,8 @@ class DrugDiseaseFilter(FilterSet):
 
     def filter_query(self, queryset, name, value):
         return queryset.filter(
-            Drug.Q(name__icontains=value) |  # Search drug name
-            Disease.Q(diseases__name__icontains=value)  # Search disease name
+            Q(name__icontains=value) |  # Search drug name
+            Q(diseases__name__icontains=value)  # Search disease name
         ).distinct()
 
 
