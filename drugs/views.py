@@ -1,27 +1,34 @@
 from rest_framework import generics
-from django_filters.rest_framework import DjangoFilterBackend
-from .models import Drug, Disease
-from .serializers import DrugDiseaseSearchSerializer
-from django_filters import FilterSet, CharFilter
-from django.db.models import Q
+from .models import Disease, Drug
+from .serializers import (
+    DiseaseSerializer,
+    DrugSerializer,
+    DrugDiseaseSearchSerializer,
+    SearchResultSerializer,
+)
 
 
-class DrugDiseaseFilter(FilterSet):
-    query = CharFilter(method='filter_query')
+class DiseaseSearchAPIView(generics.ListAPIView):
+    serializer_class = DiseaseSerializer
 
-    class Meta:
-        model = Drug
-        fields = []
-
-    def filter_query(self, queryset, name, value):
-        return queryset.filter(
-            Q(name__icontains=value) |  # Search drug name
-            Q(diseases__name__icontains=value)  # Search disease name
-        ).distinct()
+    def get_queryset(self):
+        query = self.request.query_params.get('query', '')
+        return Disease.objects.filter(name__icontains=query)
 
 
-class DrugDiseaseSearchView(generics.ListAPIView):
-    serializer_class = DrugDiseaseSearchSerializer
-    queryset = Drug.objects.all()
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = DrugDiseaseFilter
+class DrugSearchAPIView(generics.ListAPIView):
+    serializer_class = DrugSerializer
+
+    def get_queryset(self):
+        query = self.request.query_params.get('query', '')
+        return Drug.objects.filter(name__icontains=query)
+
+
+class DrugDiseaseSearchAPIView(generics.ListAPIView):
+    serializer_class = SearchResultSerializer
+
+    def get_queryset(self):
+        query = self.request.query_params.get('query', '')
+        diseases = Disease.objects.filter(name__icontains=query)
+        drugs = Drug.objects.filter(name__icontains=query)
+        return [{'diseases': diseases, 'drugs': drugs}]
