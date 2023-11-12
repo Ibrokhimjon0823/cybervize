@@ -26,7 +26,13 @@ class TestDiseaseSearchAPIView:
 class TestDrugSearchAPIView:
     @pytest.fixture
     def drug(self):
-        return Drug.objects.create(name="Qupen")
+        drug = Drug.objects.create(
+            name="Qupen",
+            description="Description",
+            released="2023-06-01"
+        )
+        drug.save()
+        return drug
 
     def test_drug_search(self, rf, drug):
         url = reverse('drug-search')
