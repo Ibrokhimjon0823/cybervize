@@ -1,4 +1,4 @@
-# Solution for Moberries Sample Task
+# Solution for Cybervize Sample Task
 
 ## Tech stack
     Python: 3.9
