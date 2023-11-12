@@ -3,40 +3,25 @@ version: '3.10'
 services:
   web:
     build: .
-#    command: python manage.py runserver 0.0.0.0:8000
-#    volumes:
-#      - static_data:/app/static
     ports:
       - "8000:8000"
     restart: always
     env_file:
-      - ./.env
+      - .env
     depends_on:
       - db
     volumes:
       - .:/app
       - ./media:/app/media
       - ./static:/app/static
-    command: >
-      sh -c "python manage.py migrate &&
-             python fixtures/fixtures/py &&
-             python manage.py runserver 0.0.0.0:8000"
-
 
   db:
     image: postgres:13.0-alpine
     env_file:
       - .env
-#    volumes:
-#      - drugs_db:/var/lib/postgresql/data
-#    ports:
-#      - 6543:5432
+    volumes:
+      - drugs_db:/var/lib/postgresql/data
 
-    #or, use environment variable directly
-    # environment:
-    #    - POSTGRES_USER=${DB_USERNAME}
-    #    - POSTGRES_PASSWORD=${DB_PASSWORD}
-    #    - POSTGRES_DB=${DB_NAME}
 volumes:
   drugs_db:
   static_data:
