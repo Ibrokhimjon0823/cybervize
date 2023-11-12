@@ -2,8 +2,13 @@ import json
 import sys
 import os
 import django
+import pathlib
 
-sys.path.append('/Users/abc/code/cybervize')
+
+path = pathlib.Path(__file__).parent.resolve()
+
+
+sys.path.append(str(path.parent))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'server.settings')
 
 # Initialize Django ORM
@@ -12,7 +17,7 @@ django.setup()
 from drugs.models import Drug, Disease
 
 # Load JSON data from the file
-json_file = '/Users/abc/code/cybervize/fixtures/dataset.json'
+json_file = path/'dataset.json'
 
 try:
     with open(json_file, 'r') as file:
