@@ -22,7 +22,6 @@
   - Drug-Diseases-Search: `127.0.0.1/api/drug-disease-search/`
   - Drug-Search: `127.0.0.1/api/drugs//`
   - Diseases-Search: `127.0.0.1/api/diseases/`
-  
-## Test 
-- Run tests: `docker-compose exec app python manage.py test`
-- Run flake: `docker-compose exec app flake8`
+
+## Example Query
+    http://127.0.0.1:8000/api/drug-disease-search/?query=Fludara
