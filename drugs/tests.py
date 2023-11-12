@@ -28,7 +28,7 @@ class TestDrugSearchAPIView:
     def drug(self):
         drug = Drug.objects.create(
             name="Qupen",
-            description="Description",
+            description="For headache",
             released="2023-06-01"
         )
         drug.save()
@@ -46,8 +46,8 @@ class TestDrugDiseaseSearchAPIView:
     @pytest.fixture
     def disease_and_drug(self):
         disease = Disease.objects.create(name="Rak")
-        drug = Drug.objects.create(name="Qupen")
-        disease.drugs.add(drug)
+        drug = Drug.objects.create(name="Rak Qupen")
+        drug.diseases.add(disease)
         return disease, drug
 
     def test_drug_disease_search(self, rf, disease_and_drug):
