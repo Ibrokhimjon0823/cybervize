@@ -4,7 +4,6 @@
     Python: 3.9
     Django: 4.2
     DRF: 3.14
-    Flake8: 6.1
     Pytest: 7.4
     Postgres: 13
     Docker, docker-compose
